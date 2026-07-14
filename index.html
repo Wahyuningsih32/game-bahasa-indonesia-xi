@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <!-- Pengaturan dasar halaman dan tampilan perangkat. -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Game diagnostik Bahasa Indonesia Kelas XI Kurikulum Merdeka." />
+  <title>Game Diagnostik Bahasa Indonesia XI</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Ornamen latar untuk nuansa permainan yang modern. -->
+  <div class="background-orb orb-one" aria-hidden="true"></div>
+  <div class="background-orb orb-two" aria-hidden="true"></div>
+
+  <main class="app-shell">
+    <!-- Identitas aplikasi yang tampil di seluruh halaman. -->
+    <header class="app-header">
+      <a class="brand" href="index.html" aria-label="Halaman awal Game Diagnostik Bahasa Indonesia">
+        <span class="brand-mark">BI</span>
+        <span>Diagnostik Bahasa</span>
+      </a>
+      <span class="header-badge">Kelas XI</span>
+    </header>
+
+    <!-- Halaman pembuka dan formulir data siswa. -->
+    <section id="start-screen" class="screen screen-active" aria-labelledby="start-title">
+      <div class="hero-card">
+        <div class="hero-copy">
+          <p class="eyebrow">Kurikulum Merdeka · 30 Soal</p>
+          <h1 id="start-title">Game Diagnostik<br />Bahasa Indonesia</h1>
+          <p class="hero-description">Uji pemahamanmu pada teks argumentasi, berita, cerpen, dan resensi dalam pengalaman belajar yang seru.</p>
+          <div class="topic-list" aria-label="Materi yang diujikan">
+            <span>Argumentasi</span>
+            <span>Berita</span>
+            <span>Cerpen</span>
+            <span>Resensi</span>
+          </div>
+        </div>
+
+        <form id="student-form" class="student-form" novalidate>
+          <div class="form-heading">
+            <span class="form-icon" aria-hidden="true">✦</span>
+            <div>
+              <h2>Siap bermain?</h2>
+              <p>Isi identitasmu terlebih dahulu.</p>
+            </div>
+          </div>
+
+          <label for="student-name">Nama siswa</label>
+          <input id="student-name" name="studentName" type="text" placeholder="Contoh: Siti Rahma" autocomplete="name" required maxlength="60" />
+
+          <div class="form-row">
+            <div>
+              <label for="student-class">Kelas</label>
+              <input id="student-class" name="studentClass" type="text" placeholder="Contoh: XI-1" required maxlength="20" />
+            </div>
+            <div>
+              <label for="student-number">Nomor absen</label>
+              <input id="student-number" name="studentNumber" type="number" placeholder="Contoh: 12" required min="1" max="99" inputmode="numeric" />
+            </div>
+          </div>
+
+          <p id="form-message" class="form-message" role="alert"></p>
+          <button class="primary-button" type="submit">
+            <span>Mulai Game</span>
+            <span aria-hidden="true">→</span>
+          </button>
+          <p class="form-note">Setiap soal memiliki waktu 45 detik dan tidak dapat diulang.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Halaman permainan, soal diisi secara dinamis oleh JavaScript. -->
+    <section id="quiz-screen" class="screen" aria-labelledby="question-title" hidden>
+      <div class="quiz-topbar">
+        <div>
+          <p id="question-count" class="question-count">SOAL 1 DARI 30</p>
+          <p id="question-category" class="question-category">Teks Argumentasi</p>
+        </div>
+        <div id="timer-box" class="timer-box" aria-label="Sisa waktu">
+          <span class="timer-icon" aria-hidden="true">◷</span>
+          <span id="timer-text">0:45</span>
+        </div>
+      </div>
+
+      <div class="progress-track" aria-label="Kemajuan pengerjaan">
+        <div id="progress-bar" class="progress-bar"></div>
+      </div>
+
+      <article id="question-card" class="question-card">
+        <p class="question-label">Pilih jawaban yang paling tepat</p>
+        <h2 id="question-title" tabindex="-1"></h2>
+        <div id="answer-options" class="answer-options" role="group" aria-label="Pilihan jawaban"></div>
+        <p id="feedback" class="feedback" aria-live="polite"></p>
+      </article>
+
+      <p class="quiz-reminder">Pilih jawabanmu dengan teliti. Setelah memilih, kamu akan lanjut ke soal berikutnya.</p>
+    </section>
+
+    <!-- Halaman hasil permainan. -->
+    <section id="result-screen" class="screen" aria-labelledby="result-title" hidden>
+      <div class="result-card">
+        <div class="result-confetti" aria-hidden="true">✦ ✦ ✦</div>
+        <p class="eyebrow">Permainan Selesai</p>
+        <h1 id="result-title">Kerja bagus!</h1>
+        <p id="result-summary" class="result-summary"></p>
+
+        <div class="score-circle" aria-label="Skor akhir">
+          <span id="result-score">0</span>
+          <small>/ 100</small>
+        </div>
+        <p id="result-category" class="category-chip">Cukup</p>
+
+        <dl class="student-data">
+          <div><dt>Nama siswa</dt><dd id="result-name">-</dd></div>
+          <div><dt>Kelas</dt><dd id="result-class">-</dd></div>
+          <div><dt>Nomor absen</dt><dd id="result-number">-</dd></div>
+        </dl>
+
+        <div class="result-stats">
+          <div class="stat-card correct-stat"><span id="result-correct">0</span><small>Jawaban Benar</small></div>
+          <div class="stat-card wrong-stat"><span id="result-wrong">0</span><small>Jawaban Salah</small></div>
+        </div>
+
+        <button id="restart-button" class="primary-button restart-button" type="button">
+          <span>Main Lagi</span>
+          <span aria-hidden="true">↻</span>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Pemisahan data soal dan logika aplikasi. -->
+  <script src="questions.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
